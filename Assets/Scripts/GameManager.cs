@@ -16,6 +16,7 @@ public class GameManager : LazySingleton<GameManager>
     private void Awake()
     {
         EventManager.Instance.OnTapTouchLayer += HandlePressScreen;
+        EventManager.Instance.OnBlockGenerated += MoveCameraUpByBlockHeight;
     }
 
     private void Start()
@@ -28,6 +29,7 @@ public class GameManager : LazySingleton<GameManager>
     private void OnDestroy()
     {
         EventManager.Instance.OnTapTouchLayer -= HandlePressScreen;
+        EventManager.Instance.OnBlockGenerated -= MoveCameraUpByBlockHeight;
     }
 
     private void SpawnBlock()
@@ -64,14 +66,17 @@ public class GameManager : LazySingleton<GameManager>
         if (areBlocksIntersecting)
         {
             SpawnBlock();
-
-            float movementY = currentBlock.transform.localScale.y;
-            CameraManager.Instance.MoveCameraUp(movementY);
         }
         else
         {
             Debug.Log("Game Over!");
         }
+    }
+
+    private void MoveCameraUpByBlockHeight()
+    {
+        float movementY = currentBlock.transform.localScale.y;
+        CameraManager.Instance.MoveCameraUp(movementY);
     }
 
     private bool SplitBlock()

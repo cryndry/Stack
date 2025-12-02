@@ -14,4 +14,10 @@ class EventManager : LazySingleton<EventManager>
     {
         OnTapTouchLayer?.Invoke();
     }
+
+    public event Action OnBlockGenerated;
+    public void InvokeBlockGenerated()
+    {
+        OnBlockGenerated?.Invoke();
+    }
 }

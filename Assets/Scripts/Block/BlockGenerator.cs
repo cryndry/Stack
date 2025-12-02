@@ -15,6 +15,9 @@ public class BlockGenerator : LazySingleton<BlockGenerator>
         );
 
         GameObject newBlock = Instantiate(blockPrefab, position, Quaternion.identity, blocksParent.transform);
+        
+        EventManager.Instance.InvokeBlockGenerated();
+        
         return newBlock;
     }
 }
