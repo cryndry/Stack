@@ -3,8 +3,6 @@ using UnityEngine;
 public class BlockGradient : MonoBehaviour
 {
     [SerializeField] private MeshRenderer meshRenderer;
-    [SerializeField] private Color topColor = Color.magenta;
-    [SerializeField] private Color bottomColor = Color.blue;
 
 
     private void Awake()
@@ -15,6 +13,8 @@ public class BlockGradient : MonoBehaviour
     [ContextMenu("Apply Gradient")]
     private void ApplyGradient()
     {
+        BlockColorManager.Instance.GetNextGradient(out Color bottomColor, out Color topColor);
+
         Texture2D texture = new Texture2D(1, 256);
         texture.wrapMode = TextureWrapMode.Clamp;
 
