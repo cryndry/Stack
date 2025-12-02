@@ -9,26 +9,26 @@ class BlockColorManager : LazySingleton<BlockColorManager>
     private const int brightnessPeriod = 15; // Blocks per Light/Dark cycle
     
     private int blockIndex;
-    private float hue;
+    public float LastBlockHue { get; private set; }
 
 
     private void Awake()
     {
         blockIndex = Random.Range(0, brightnessPeriod);
-        hue = Random.value;
+        LastBlockHue = Random.value;
     }
 
     public void GetNextGradient(out Color firstColor, out Color secondColor)
     {
         blockIndex++;
 
-        hue = (hue + hueSpeed) % 1.0f;
-        float secondaryHue = (hue + hueSpeed * 2f) % 1.0f;
+        LastBlockHue = (LastBlockHue + hueSpeed) % 1.0f;
+        float secondaryHue = (LastBlockHue + hueSpeed * 2f) % 1.0f;
 
         float brightnessRatio = Mathf.PingPong(blockIndex, brightnessPeriod) / brightnessPeriod;
         float brightness = Mathf.Lerp(minBrightness, maxBrightness, brightnessRatio);
 
-        firstColor = Color.HSVToRGB(hue, saturation, brightness);
+        firstColor = Color.HSVToRGB(LastBlockHue, saturation, brightness);
         secondColor = Color.HSVToRGB(secondaryHue, saturation, brightness);
     }
 }
