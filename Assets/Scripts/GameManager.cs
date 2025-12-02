@@ -75,6 +75,8 @@ public class GameManager : LazySingleton<GameManager>
 
     private void MoveCameraUpByBlockHeight()
     {
+        if (currentBlock == null) return;
+
         float movementY = currentBlock.transform.localScale.y;
         CameraManager.Instance.MoveCameraUp(movementY);
     }
