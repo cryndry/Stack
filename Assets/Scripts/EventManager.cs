@@ -20,4 +20,10 @@ class EventManager : LazySingleton<EventManager>
     {
         OnBlockGenerated?.Invoke();
     }
+
+    public event Action OnGameOver;
+    public void InvokeGameOver()
+    {
+        OnGameOver?.Invoke();
+    }
 }

@@ -12,6 +12,8 @@ public class GameManager : LazySingleton<GameManager>
     private const float spawnOffset = 3.0f;
     private const float perfectHitThreshold = 0.1f;
 
+    private bool isGameOver;
+
 
     private void Awake()
     {
@@ -21,6 +23,7 @@ public class GameManager : LazySingleton<GameManager>
 
     private void Start()
     {
+        isGameOver = false;
         isMovingOnX = Random.value < 0.5f;
         lastBlock = baseBlock;
         SpawnBlock();
@@ -62,6 +65,8 @@ public class GameManager : LazySingleton<GameManager>
 
     private void HandlePressScreen()
     {
+        if (isGameOver) return;
+
         bool areBlocksIntersecting = SplitBlock();
         if (areBlocksIntersecting)
         {
@@ -69,7 +74,8 @@ public class GameManager : LazySingleton<GameManager>
         }
         else
         {
-            Debug.Log("Game Over!");
+            EventManager.Instance.InvokeGameOver();
+            isGameOver = true;
         }
     }
 
